@@ -104,9 +104,6 @@ router.post('/login', async (req, res) => {
         if (!(bcryptjs.compareSync(req.body.password, user.password)))
             return res.status(400).json({ success, message: "Invalid username or password" });
 
-
-        console.log(user)
-
         // jwt authentication 
         const data = {
             user: {
