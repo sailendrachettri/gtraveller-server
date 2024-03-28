@@ -79,7 +79,7 @@ router.post('/register', async (req, res) => {
 
 
             console.log(user);
-            res.status(200).json({ success, message: "Registration successful!", auth_token })
+            res.status(200).json({ success, message: "Registration successful!", auth_token, username : user.username })
 
         }
 
@@ -114,12 +114,11 @@ router.post('/login', async (req, res) => {
 
 
         success = true;
-        res.status(200).json({ success, message: "Logged In successful!", auth_token });
+        res.status(200).json({ success, message: "Logged In successful!", auth_token, username : user.username });
 
     } catch (error) {
         res.status(500).json({ success, message: "Internal server error" });
     }
 })
-
 
 module.exports = router
