@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 // create schema
-const UserSchema = mongoose.Schema({
+const ContactSchema = mongoose.Schema({
     firstname : {
         type : String,
         required : true
@@ -11,8 +11,7 @@ const UserSchema = mongoose.Schema({
     },
     email : {
         type : String,
-        required : true,
-        unique : true
+        required : true
     },
     phone : {
         type : Number,
@@ -23,6 +22,6 @@ const UserSchema = mongoose.Schema({
     }
 });
 
-const collection = new mongoose.model("users", UserSchema);
+const collection = new mongoose.model("contact", ContactSchema);
 // collection.indexcreate(); // something like that
 module.exports = collection;

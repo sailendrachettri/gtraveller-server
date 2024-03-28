@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/UserSchema");
+const contactInfo = require("../models/ContactSchema");
 const { body, validationResult } = require("express-validator");
 
 // create a user using post : "/"
-router.post('/', [
+router.post('/contact', [
     body("firstname", "Name length should be greater than 3").isLength({ min: 3 }),
     body("email", "Not a valid email").isEmail(),
     body("phone", "Phone number length should be 10").isLength({ min: 10, max:10 })
@@ -20,14 +20,8 @@ router.post('/', [
 
     }
     try {
-        // check for exisiting user
-        let user = await User.findOne({ email: req.body.email });
-        if (user) {
-            return res.json({ success, message: "Email already exist." });
-        }
-
         // create a new user
-        user = User.create({
+        user = contactInfo.create({
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
@@ -36,7 +30,7 @@ router.post('/', [
         });
 
         success = true;
-        res.json({ success, message: "Thanks for registeration" });
+        res.json({ success, message: "Thanks for contacting us. You'll get your response in few moments." });
 
     } catch (error) {
         res.status(500).send("Internal server error");
