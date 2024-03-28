@@ -4,9 +4,11 @@ const contactInfo = require("../models/ContactSchema");
 const { body, validationResult } = require("express-validator");
 const Users = require("../models/RegisterSchema");
 const bcryptjs = require("bcryptjs")
+const jwt = require("jsonwebtoken");
 
 
 const salt = bcryptjs.genSaltSync(10);
+const JWT_SECRET_KEY = process.env.REACT_APP_JWT_SECRET_KEY
 
 // ROUTE 1: Create an api for contact page using post : "api/auth/contact"
 router.post('/contact', [
@@ -67,9 +69,17 @@ router.post('/register', async (req, res) => {
                 phone: req.body.phone
             })
 
+            // jwt token generation
+            const data = {
+                user: {
+                    id: user.id
+                }
+            }
+            const auth_token = jwt.sign(data, JWT_SECRET_KEY);
+
 
             console.log(user);
-            res.status(200).json({ success, message: "Registration successful!" })
+            res.status(200).json({ success, message: "Registration successful!", auth_token })
 
         }
 
@@ -95,8 +105,19 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ success, message: "Invalid username or password" });
 
 
+        console.log(user)
+
+        // jwt authentication 
+        const data = {
+            user: {
+                id: user.id
+            }
+        }
+        const auth_token = jwt.sign(data, JWT_SECRET_KEY);
+
+
         success = true;
-        res.status(200).json({ success, message: "Logged In successful!" });
+        res.status(200).json({ success, message: "Logged In successful!", auth_token });
 
     } catch (error) {
         res.status(500).json({ success, message: "Internal server error" });
