@@ -23,5 +23,4 @@ const ContactSchema = mongoose.Schema({
 });
 
 const collection = new mongoose.model("contact", ContactSchema);
-// collection.indexcreate(); // something like that
 module.exports = collection;
