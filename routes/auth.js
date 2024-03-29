@@ -57,8 +57,7 @@ router.post('/register', async (req, res) => {
 
         // if user exist the send the response that user already exist
         if (user) {
-            console.log("user exist");
-            res.status(400).json({ success, message: " User already exist" });
+            res.status(400).json({ success, message: " username already exist" });
 
         } else {
             success = true;
@@ -77,12 +76,8 @@ router.post('/register', async (req, res) => {
             }
             const auth_token = jwt.sign(data, JWT_SECRET_KEY);
 
-
-            console.log(user);
             res.status(200).json({ success, message: "Registration successful!", auth_token, username : user.username })
-
         }
-
 
     } catch (error) {
         res.status(500).send("Internal server error");
